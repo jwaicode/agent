@@ -1,0 +1,14 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2em;
+}
+button {
+  font-size: 1.2em;
+  padding: 0.6em 1em;
+  border-radius: 10px;
+}
+#result {
+  margin-top: 1.5em;
+  font-size: 1.1em;
+}
