@@ -12,15 +12,15 @@ recordBtn.addEventListener("click", async () => {
     statusText.textContent = "Processing...";
   } else {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp3' });
     chunks = [];
 
     mediaRecorder.ondataavailable = e => chunks.push(e.data);
 
     mediaRecorder.onstop = async () => {
       // Create a blob from the recorded audio chunks
-      const mimeType = 'audio/mp4';
-      const fileExt = 'mp4';
+      const mimeType = 'audio/mp3';
+      const fileExt = 'mp3';
       const blob = new Blob(chunks, { type: mimeType });
       
       // Create a File object from the blob with proper name and type
