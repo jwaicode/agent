@@ -31,7 +31,8 @@ recordBtn.addEventListener("click", async () => {
       
       // Handle the array response from n8n
       if (Array.isArray(data) && data.length > 0 && data[0].output) {
-        resultDiv.textContent = data[0].output;
+        const parsedOutput = parseSimpleMarkdown(data[0].output);
+        resultDiv.innerHTML = parsedOutput;
       } else {
         resultDiv.textContent = "No result returned.";
       }
@@ -53,3 +54,48 @@ recordBtn.addEventListener("click", async () => {
     }
   }
 });
+
+function parseSimpleMarkdown(text) {
+    // Handle bold text (using ** or __)
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/__(.*?)__/g, '<strong>$1</strong>');
+    
+    // Handle italic text (using * or _)
+    text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    text = text.replace(/_(.*?)_/g, '<em>$1</em>');
+    
+    // Handle links [text](url)
+    text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+    
+    // Handle lists
+    // Split text into lines
+    const lines = text.split('\n');
+    const processedLines = lines.map(line => {
+        // Unordered lists (- or *)
+        if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+            return `<li>${line.trim().substring(2)}</li>`;
+        }
+        return line;
+    });
+    
+    // Wrap consecutive list items in ul tags
+    let inList = false;
+    const finalLines = [];
+    for (const line of processedLines) {
+        if (line.startsWith('<li>')) {
+            if (!inList) {
+                finalLines.push('<ul>');
+                inList = true;
+            }
+        } else if (inList) {
+            finalLines.push('</ul>');
+            inList = false;
+        }
+        finalLines.push(line);
+    }
+    if (inList) {
+        finalLines.push('</ul>');
+    }
+    
+    return finalLines.join('\n');
+}
