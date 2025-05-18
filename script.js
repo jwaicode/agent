@@ -21,7 +21,7 @@ recordBtn.addEventListener("click", async () => {
       const formData = new FormData();
       formData.append("audio", file);
 
-      const response = await fetch("https://autothai.app.n8n.cloud/webhook-test/56f98949-4d7b-4ec3-a2b4-11923b65d5d7", {
+      const response = await fetch("https://autothai.app.n8n.cloud/webhook-test/a39dd63e-d8b4-44d0-9136-508b14eb5814", {
         method: "POST",
         body: formData
       });
