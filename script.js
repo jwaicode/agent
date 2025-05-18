@@ -27,7 +27,7 @@ recordBtn.addEventListener("click", async () => {
       });
 
       const data = await response.json();
-      resultDiv.textContent = data.output || "No result returned.";
+      resultDiv.innerHTML = data.output || "No result returned.";
       statusText.textContent = "Done!";
     } catch (err) {
       statusText.textContent = "Error: " + err.message;
