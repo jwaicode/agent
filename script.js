@@ -27,15 +27,7 @@ recordBtn.addEventListener("click", async () => {
       });
 
       const data = await response.json();
-      console.log('Webhook response:', data); // For debugging
-      
-      // Handle the array response from n8n
-      if (Array.isArray(data) && data.length > 0 && data[0].output) {
-        resultDiv.textContent = data[0].output;
-      } else {
-        resultDiv.textContent = "No result returned.";
-      }
-      
+      resultDiv.innerHTML = data.output || "No result returned.";
       statusText.textContent = "Done!";
     } catch (err) {
       statusText.textContent = "Error: " + err.message;
